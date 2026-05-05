@@ -1,0 +1,20 @@
+# playbooks/02-usuarios.yml
+---
+- name: Gestión de usuarios
+  hosts: todos
+  become: yes
+
+  tasks:
+    - name: Crear usuario devops
+      user:
+        name: devops
+        comment: "Usuario DevOps del taller"
+        shell: /bin/bash
+        create_home: yes
+        state: present
+
+    - name: Agregar usuario al grupo sudo
+      user:
+        name: devops
+        groups: sudo
+        append: yes

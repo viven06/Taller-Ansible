@@ -1,0 +1,22 @@
+# playbooks/04-archivos.yml
+---
+- name: Gestión de archivos y directorios
+  hosts: todos
+  become: yes
+
+  tasks:
+    - name: Crear directorio del taller
+      file:
+        path: /opt/taller-ansible
+        state: directory
+        owner: devops
+        mode: '0755'
+
+    - name: Crear archivo de configuración
+      copy:
+        dest: /opt/taller-ansible/config.txt
+        content: |
+          # Configuración del Taller Ansible
+          Fecha: {{ ansible_date_time.date }}
+          Servidor: {{ inventory_hostname }}
+          Sistema: {{ ansible_distribution }} {{ ansible_distribution_version }}

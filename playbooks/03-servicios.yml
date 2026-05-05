@@ -1,0 +1,38 @@
+# playbooks/03-servicios.yml
+---
+- name: Configurar servidor web
+  hosts: servidores_web
+  become: yes
+
+  tasks:
+    - name: Instalar Nginx
+      apt:
+        name: nginx
+        state: present
+
+    - name: Iniciar y habilitar Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+    - name: Crear página de prueba
+      copy:
+        content: "<h1>Servidor Web gestionado por Ansible!</h1>"
+        dest: /var/www/html/index.html
+
+- name: Configurar servidor DB
+  hosts: servidores_db
+  become: yes
+
+  tasks:
+    - name: Instalar MySQL
+      apt:
+        name: mysql-server
+        state: present
+
+    - name: Iniciar y habilitar MySQL
+      service:
+        name: mysql
+        state: started
+        enabled: yes

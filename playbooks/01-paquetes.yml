@@ -1,0 +1,19 @@
+# playbooks/01-paquetes.yml
+---
+- name: Instalar paquetes esenciales
+  hosts: todos
+  become: yes
+
+  tasks:
+    - name: Actualizar caché de apt
+      apt:
+        update_cache: yes
+
+    - name: Instalar paquetes
+      apt:
+        name:
+          - curl
+          - git
+          - htop
+          - vim
+        state: present
